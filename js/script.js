@@ -29,9 +29,13 @@ $(document).ready(function() {
     if (formReservation) {
         formReservation.onsubmit = submitFormReservation;
     }
-    var formComment =  document.getElementById('form_send_comment');
+    var formComment = document.getElementById('form_send_comment');
     if (formComment) {
      formComment.onsubmit = validateFormComment;
+    }
+    var formSearch = document.getElementById('form_search');
+    if (formSearch) {
+        formSearch.onsubmit = submitSearchForm;
     }
     // Se inicializa el datepicker
     var datepicker = $('#datepicker');
@@ -128,6 +132,21 @@ function submitFormReservation() {
     var dateSelected = $('#datepicker').datepicker().value();
     $('#date').val(dateSelected);
     return true;
+}
+
+/**
+ * Permite realizar el href si se escribió algo en el input
+ * @param {Event} e 
+ */
+function submitSearchForm(e) {
+    e.preventDefault(); 
+    var input = document.getElementById('search').value;
+    var url = 'index.php?section=news';
+    if (input.length > 0) {
+        location.href = `${url}&search=${input}`;
+    } else {
+        location.href = url;
+    }
 }
 
 /***

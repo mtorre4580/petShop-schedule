@@ -7,7 +7,7 @@
     $totalRows = $results['TOTAL'];
     $totalLinks = ceil($totalRows / $limitLength);
     $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-
+    $inputSearch = isset($_GET['search']) ? $_GET['search'] : '';
     if ($currentPage < 1) { 
         $currentPage = 1; 
     }
@@ -25,14 +25,21 @@
                 IFNULL(n.image ,'empty_new.png') as image , 
                 n.title, c.description AS category 
             FROM news n LEFT JOIN category c ON  n.fk_category = c.id";
-
+            
     $categorySelected = isset($_GET['category']) ? $_GET['category'] : null;
 
-    if(!empty($categorySelected) && ($categorySelected > 0 && $categorySelected < getTotalCategories())) {
-        $query = $query." WHERE n.fk_category = '$categorySelected'"; 
+    if (!empty($inputSearch) ) {
+        $query = $query. " WHERE n.description LIKE '%$inputSearch%' OR n.title LIKE '%$inputSearch%'";
+        if (!empty($categorySelected) && ($categorySelected > 0 && $categorySelected < getTotalCategories())) {
+            $query = $query." AND n.fk_category = '$categorySelected'"; 
+        } 
     } else {
-        $query = $query." ORDER BY date DESC LIMIT $limitInit, $limitLength ;";
+        if (!empty($categorySelected) && ($categorySelected > 0 && $categorySelected < getTotalCategories())) {
+            $query = $query." WHERE n.fk_category = '$categorySelected'"; 
+        } 
     }
+    
+    $query = $query." ORDER BY date DESC LIMIT $limitInit, $limitLength ;";
 
     $news = mysqli_query($cnx, $query);
     
@@ -64,29 +71,38 @@
 <section>
     <div class="jumbotron jumbotron-fluid jumbotron_register primary-color text-white">
         <div class="container">
-            <h2 class="h2-reponsive mb-4 mt-2 font-bold">Noticias</h2>
+            <h2 class="h2-reponsive mt-2 font-bold">Noticias</h2>
         </div>
         <div class="container">
+            <form id="form_search" class="form-inline w-100" method="get">
+                <input class="form-control form-control-sm ml-3 w-100" type="text" name="search" value="<?php echo $inputSearch; ?>" id="search" placeholder="Buscar">
+            </form>
+            <div class="container__categories">
+                <?php foreach($categories as $category) : ?>
+                    <?php if(!empty($categorySelected) && $category['id'] == $categorySelected) : ?>
+                        <a href="index.php?section=news&category=<?php echo $category['id'];?>" class="nav-link link-categories link-selected">
+                            <?php echo $category['description']; ?>
+                        </a>
+                    <?php else : ?>
+                        <a href="index.php?section=news&category=<?php echo $category['id'];?>" class="nav-link link-categories">
+                            <?php echo $category['description']; ?>
+                        </a>
+                    <?php endif ;?>
+                <?php endforeach; ?>
+            </div>
             <?php if(!empty($categorySelected)) : ?>
                 <div class="container__categories">
-                    <a class="btn-floating peach-gradient" href="index.php?section=news" style="color:#fafafa">Quitar filtros 
+                    <a class="btn-floating peach-gradient link-categories" href="index.php?section=news">Quitar filtros 
                         <i class="far fa-times-circle"></i>
                     </a>
                 </div>
             <?php endif; ?>
-            <div class="container__categories">
-                <?php foreach($categories as $category) : ?>
-                    <a href="index.php?section=news&category=<?php echo $category['id'];?>" class="badge badge-success">
-                        <?php echo $category['description']; ?>
-                    </a>
-                <?php endforeach; ?>
-            </div>
         </div>
     </div>
     <div class="container">
         <div class="container__news">
             <div class="row">
-                <?php if(!empty($news)) : ?>
+                <?php if($news->num_rows > 0) : ?>
                     <?php foreach($news as $new) : ?>
                         <div class="col-md-4">
                             <div class="card card_new">
@@ -107,6 +123,8 @@
                             </div>
                         </div>
                     <?php endforeach; ?>
+                <?php else : ?>
+                    <p>No se encontraron resultados</p>
                 <?php endif; ?>
             </div>
         </div>

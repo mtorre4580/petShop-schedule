@@ -232,3 +232,12 @@
 .text-bold {
     font-weight: bold;
 }
+.link-categories {
+    color: #fff;
+}
+.link-categories:hover {
+    color: rgba(255,255,255,.75);
+}
+.link-selected {
+    font-weight: bold;
+}
