@@ -6,7 +6,7 @@
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
     date_default_timezone_set('America/Argentina/Buenos_Aires');
-    $sections = array('home' => 'Inicio', 'news' => 'Noticias', 'reservation' => 'Reservar');
+    $sections = array('home' => 'Inicio', 'news' => 'Noticias', 'reservation' => 'Reservar', 'info' => 'Acerca del sitio');
     session_start();
 
 ?>

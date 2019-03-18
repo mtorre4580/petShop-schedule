@@ -17,6 +17,9 @@
     case 'detail': 
         include('./modules/detail.php'); 
         break;
+    case 'info': 
+        include('./modules/info.php'); 
+        break;
     default:
         include('./modules/home.php');
 endswitch;?>
