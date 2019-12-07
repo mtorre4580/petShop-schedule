@@ -37,6 +37,10 @@ $(document).ready(function() {
     if (formSearch) {
         formSearch.onsubmit = submitSearchForm;
     }
+    var formMyAccount = document.getElementById('form-my-account');
+    if (formMyAccount) {
+        formMyAccount.onsubmit = validateFormMyAccount;
+    }
     // Se inicializa el datepicker
     var datepicker = $('#datepicker');
     if (datepicker) {
@@ -147,6 +151,29 @@ function submitSearchForm(e) {
     } else {
         location.href = url;
     }
+}
+
+/**
+ * Permite validar el formulario para cambiar la contraseña
+ * @param {Event} e 
+ */
+function validateFormMyAccount(e) {
+    var sendFormMyAccount = true;
+    var old_password = document.getElementById('old_password');
+    var new_password = document.getElementById('new_password');
+    var errorMsg = '';
+    if (!validateInput(old_password.value, regex.register.password)) {
+        sendFormMyAccount = false;
+        errorMsg += 'La contraseña actual debe poseer mínimo 6 caracteres <br/>';
+    } 
+    if (!validateInput(new_password.value, regex.register.password)) {
+        sendFormMyAccount = false;
+        errorMsg += 'La contraseña nueva debe poseer mínimo 6 caracteres <br/>';
+    } 
+    if(!sendFormMyAccount) {
+        $('#errFormComment').html(errorMsg);
+    }
+    return sendFormMyAccount;
 }
 
 /***

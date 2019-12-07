@@ -18,7 +18,7 @@
             <ul class="navbar-nav nav-flex-icons">
                 <?php if($userLogged != null) : ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="actions/logout.php"><i class="fas fa-paw"></i> <?php echo $userLogged['email']; ?></a>
+                        <a class="nav-link" href="index.php?section=my-account"><i class="fas fa-paw"></i> <?php echo $userLogged['email']; ?></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="actions/logout.php"><i class="fas fa-sign-out-alt"></i>Salir</a>

@@ -20,6 +20,9 @@
     case 'info': 
         include('./modules/info.php'); 
         break;
+    case 'my-account':
+        include('./modules/my-account.php');
+        break;
     default:
         include('./modules/home.php');
 endswitch;?>

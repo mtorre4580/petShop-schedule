@@ -1,3 +1,6 @@
+<?php
+    $userLogged = isset($_SESSION['USER_LOGGED']) ? $_SESSION['USER_LOGGED'] : null;
+?>
 <footer class="page-footer font-small lighten-5 mt-4 footer_background">
     <div class="container text-center text-md-left py-1">
         <div class="row mt-3 dark-grey-text">
@@ -7,7 +10,9 @@
             </div>
             <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
                 <p class="text-uppercase font-weight-bold">Links Útiles</p>
-                <a class="dark-grey-text footer_links" href="#">Tu cuenta</a>
+                <?php if ($userLogged): ?>
+                    <a class="dark-grey-text footer_links" href="index.php?section=my-account">Mi cuenta</a>
+                <?php endif; ?>
                 <a class="dark-grey-text footer_links" href="#">Ayuda</a>
             </div>
             <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
