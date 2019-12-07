@@ -241,3 +241,13 @@
 .link-selected {
     font-weight: bold;
 }
+.subtitle_profesor {
+    text-align: center;
+    margin: 0;
+    padding: 4px 0;
+    background-color: #9CCC65;
+    color: #fff;
+}
+.font-bold {
+    font-weight: 500;
+}

@@ -58,7 +58,7 @@
                     <form id="form_send_comment" action="actions/sendComment.php" method="post">
                         <div class="md-form">
                             <i class="fas fa-pencil-alt prefix"></i>
-                            <textarea name="comment" id="comment" class="md-textarea form-control" rows="3" columns="2"></textarea>
+                            <textarea name="comment" id="comment" class="md-textarea form-control" rows="3"></textarea>
                             <input type="hidden" name="idNew" value="<?php echo $id; ?>" />
                             <div>
                                 <p id="errFormComment" class="invalid"><?php echo $invalidRequest ?></p>
