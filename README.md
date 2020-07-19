@@ -1,4 +1,4 @@
-# programacion-II
+# petShop-schedule
 
 PetShop Schedule shifts for hairdressers
 
